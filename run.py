@@ -1,6 +1,5 @@
 import daemon
 import fetch_data
 
-pidfile = daemon.pidlockfile.PIDLockFile("/var/run/orchids.pid")
-with daemon.DaemonContext(pidfile=pidfile):
+with daemon.DaemonContext():
     fetch_data.main()
