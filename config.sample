@@ -4,6 +4,7 @@ BOT_FILE=telegram.users
 PORT=9999
 
 [default]
+# 11 for dht11 or 22 for dht22
 SENSOR=11
 PIN=4
 DATE_FORMAT="%d/%m/%Y %H:%M:%S"

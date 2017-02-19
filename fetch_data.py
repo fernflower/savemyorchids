@@ -8,20 +8,15 @@ import time
 import Adafruit_DHT as adht
 import influxdb
 
-# XXX FIXME move this stuff to config
-SENSOR = adht.DHT11
-PIN = 4
-DATE_FORMAT="%d/%m/%Y %H:%M:%S"
-INFLUX_HOST="localhost"
-INFLUX_PORT="8086"
-INFLUX_USER="influxdb"
-INFLUX_PASSWORD="somepassword"
-INFLUX_DBNAME="logger"
+import utils
+
+CONFIG = "config"
+PARAMS = utils.read_config(CONFIG, "default")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pin', default=PIN, help="Signal pin number, BOARD numbering")
-    parser.add_argument('--dht', default=SENSOR)
+    parser.add_argument('--pin', default=PARAMS.pin, help="Signal pin number, BOARD numbering")
+    parser.add_argument('--dht', default=int(PARAMS.sensor))
     parser.add_argument('--sleep', default=5)
     parser.add_argument('--format', default='json', choices=['csv', 'json'],
             help="Data output format")
@@ -53,12 +48,12 @@ def fetch_data(dht, pin):
     if not hum or not temp:
         return None
     curr_date = datetime.datetime.now()
-    date = datetime.datetime.strftime(curr_date, DATE_FORMAT)
+    date = datetime.datetime.strftime(curr_date, PARAMS.date_format)
     return {'date': date, 'temperature': temp, 'humidity': hum}
 
 def write_to_influx(data):
-    client = influxdb.InfluxDBClient(INFLUX_HOST, INFLUX_PORT, INFLUX_USER, 
-            INFLUX_PASSWORD, INFLUX_DBNAME)
+    client = influxdb.InfluxDBClient(PARAMS.influx_host, PARAMS.influx_port, PARAMS.influx_user,
+            PARAMS.influx_password, PARAMS.influx_dbname)
     body = [{"measurement": 'climate',
              "fields": {"temperature" : data["temperature"],
                         "humidity": data["humidity"]}
