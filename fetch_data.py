@@ -26,6 +26,7 @@ def main():
     parser.add_argument('--format', default='json', choices=['csv', 'json'],
             help="Data output format")
     parser.add_argument('--filename')
+    parser.add_argument('--nowrite', action='store_true', default=False)
     parsed = parser.parse_args()
     output = open(parsed.filename, 'a') if parsed.filename else sys.stdout
     if parsed.format == 'csv':
@@ -40,7 +41,8 @@ def main():
                 writer.writerow([data['date'], data['temperature'], data['humidity']])
             elif parsed.format == 'json':
                 output.write(json.dumps(data) + "\n")
-            write_to_influx(data)
+            if not parsed.nowrite:
+                write_to_influx(data)
             time.sleep(parsed.sleep)
     except KeyboardInterrupt:
         output.close()
