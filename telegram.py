@@ -6,10 +6,10 @@ from BaseHTTPServer import BaseHTTPRequestHandler
 import SimpleHTTPServer
 import SocketServer
 
-# XXX move to config
-BOT_TOKEN = "some_bot_token_here"
-BOT_FILE = "telegram.users"
-PORT = 9999
+import utils
+
+CONFIG = "config"
+PARAMS = utils.read_config(CONFIG, "telegram")
 
 
 class TelegramBot(object):
@@ -20,9 +20,9 @@ class TelegramBot(object):
 
     @property
     def chats(self):
-        if not os.path.exists(BOT_FILE):
+        if not os.path.exists(PARAMS.bot_file):
             return []
-        with open(BOT_FILE, 'r') as f:
+        with open(PARAMS.bot_file, 'r') as f:
             return [int(c.strip()) for c in f.read().split('\n') if c.strip() != '']
 
     def send_message(self, msg, chat_id):
@@ -40,7 +40,7 @@ class TelegramBot(object):
         return [c for c in chats]
 
     def save_chat(self, chat):
-        with open(BOT_FILE, 'a') as f:
+        with open(PARAMS.bot_file, 'a') as f:
             f.write("%s\n" % chat)
 
     def send_all(self, msg):
@@ -51,7 +51,7 @@ class TelegramBot(object):
 
 
 class TelegramHandler(BaseHTTPRequestHandler):
-    bot = TelegramBot(BOT_TOKEN)
+    bot = TelegramBot(PARAMS.bot_token)
 
     def do_POST(self):
         content_len = int(self.headers.getheader('content-length', 0))
@@ -64,11 +64,10 @@ class TelegramHandler(BaseHTTPRequestHandler):
                 {'param': name, 'msg': grafana_msg, 'image': img})
         self.send_response(200, 'Data sent!')
 
-
-def launch_server(port):
-    httpd = SocketServer.TCPServer(("", port), TelegramHandler)
+def launch_server():
+    httpd = SocketServer.TCPServer(("", int(PARAMS.port)), TelegramHandler)
     httpd.serve_forever()
 
 
 if __name__ == "__main__":
-    launch_server(PORT)
+    launch_server()

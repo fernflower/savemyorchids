@@ -2,4 +2,5 @@
 *.pyc
 *.sw[op]
 telegram.users
+config
 

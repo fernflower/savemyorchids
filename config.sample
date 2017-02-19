@@ -1,0 +1,15 @@
+[telegram]
+BOT_TOKEN=some_bot_token_here
+BOT_FILE=telegram.users
+PORT=9999
+
+[default]
+SENSOR=11
+PIN=4
+DATE_FORMAT="%d/%m/%Y %H:%M:%S"
+INFLUX_HOST=localhost
+INFLUX_PORT=8086
+INFLUX_USER=influxdb
+INFLUX_PASSWORD=somepassword
+INFLUX_DBNAME=logger
+
