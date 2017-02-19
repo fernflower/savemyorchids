@@ -57,11 +57,11 @@ class TelegramHandler(BaseHTTPRequestHandler):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
         data = json.loads(post_body)
-        img = data['imageUrl']
+        # might not be configured
+        img = data.get('imageUrl', '')
         grafana_msg = data['message']
-        name = data['ruleName']
-        self.bot.send_all("Hi! Please check my %(param)s.\n%(msg)s\n%(image)s" % 
-                {'param': name, 'msg': grafana_msg, 'image': img})
+        self.bot.send_all("Oooops, %(msg)s\n%(image)s" %
+                {'msg': grafana_msg, 'image': img})
         self.send_response(200, 'Data sent!')
 
 def launch_server():
