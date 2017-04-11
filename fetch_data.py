@@ -2,14 +2,17 @@ import argparse
 import csv
 import datetime
 import json
+import logging
 import sys
 import time
 
 import Adafruit_DHT as adht
 import influxdb
 
+import display
 import utils
 
+LOG = logging.getLogger(__name__)
 CONFIG = "config"
 PARAMS = utils.read_config(CONFIG, "default")
 
@@ -27,9 +30,11 @@ def main():
     if parsed.format == 'csv':
         writer = csv.writer(output, delimiter=',')
         writer.writerow(['Date', 'Temperature', 'Humidity'])
+    led_display = display.init_display()
     try:
         while True:
             data = fetch_data(parsed.dht, parsed.pin)
+            LOG.info("Data fetched: %s" % data)
             if not data:
                 continue
             if parsed.format == 'csv':
@@ -38,6 +43,7 @@ def main():
                 output.write(json.dumps(data) + "\n")
             if not parsed.nowrite:
                 write_to_influx(data)
+            display.output(led_display, data["temperature"], data["humidity"])
             time.sleep(parsed.sleep)
     except KeyboardInterrupt:
         output.close()

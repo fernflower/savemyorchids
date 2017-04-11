@@ -1,3 +1,4 @@
 argparse
 influxdb
 python-daemon
+RPi.GPIO
