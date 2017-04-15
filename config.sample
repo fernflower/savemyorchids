@@ -14,3 +14,12 @@ INFLUX_USER=influxdb
 INFLUX_PASSWORD=somepassword
 INFLUX_DBNAME=logger
 
+[display]
+CLK=23
+DIO=24
+DIGITS=4
+
+[moisture]
+# will be turned on only to read data, prolonging sensor life
+VCC=17
+DIO=27
