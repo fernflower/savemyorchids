@@ -12,7 +12,7 @@ def init_display():
     display.ShowDoublepoint(True)
     return display
 
-def form_number(num):
+def form_number(num, digits):
     n = int(PARAMS.digits)
     res = []
     while num != 0:
@@ -20,16 +20,19 @@ def form_number(num):
         num = num / 10
         res.append(dig)
     res.reverse()
+    if len(res) < digits:
+        res = [0] * (digits-len(res)) + res
     return res
 
 def output(display, temp, hum):
-    digits_temp = form_number(int(temp))
-    digits_hum = form_number(int(hum))
+    digits = int(PARAMS.digits) / 2
+    digits_temp = form_number(int(temp),digits)
+    digits_hum = form_number(int(hum), digits)
     display.Show(digits_temp + digits_hum)
 
 def main():
     display = init_display()
-    output(36.6, 43.2, display)
+    output(display, 9.0, 43.2)
 
 if __name__ == "__main__":
     main()
