@@ -1,6 +1,6 @@
 [Unit]
 Description=Orchids climate control
-After=syslog.target
+After=grafana.target
 
 [Service]
 Type=simple
