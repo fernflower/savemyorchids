@@ -1,3 +1,5 @@
+import time
+
 import RPi.GPIO as IO
 
 import extdevinterface
@@ -18,10 +20,12 @@ class SoilSensor(extdevinterface.ExternalDevice):
 
     def output(self):
         # turn on soil sensor
-        # IO.output(m_vcc, IO.HIGH)
+        IO.output(self._vcc, IO.HIGH)
+        # wait for some time to make sure it is switched on
+        time.sleep(1)
         # collect data
         soil_state = IO.input(self._dio)
         # turn off soil sensor
-        # IO.output(m_vcc, IO.LOW)
+        IO.output(self._vcc, IO.LOW)
         # 1 is ok and 0 not
         return {"soil_state": soil_state}
