@@ -14,9 +14,9 @@ LOG = logging.getLogger(__name__)
 
 
 def run():
-    params = utils.read_config(CONFIG, "default")
-    ping_url = "http://%(host)s:%(port)s/ping" % {"host": params.influx_host,
-                                                  "port": params.influx_port}
+    params = utils.read_config(CONFIG, "influx")
+    ping_url = "http://%(host)s:%(port)s/ping" % {"host": params.host,
+                                                  "port": params.port}
     wait_c = 0
     while wait_c < TIMEOUT:
         # wait until influxdb accepts connections
