@@ -3,23 +3,38 @@ BOT_TOKEN=some_bot_token_here
 BOT_FILE=telegram.users
 PORT=9999
 
-[default]
+[influx]
+HOST=localhost
+PORT=8086
+USER=influxdb
+PASSWORD=somepassword
+DBNAME=logger
+
+[dht]
 # 11 for dht11 or 22 for dht22
-SENSOR=11
+DHT_TYPE=11
 PIN=4
-DATE_FORMAT="%d/%m/%Y %H:%M:%S"
-INFLUX_HOST=localhost
-INFLUX_PORT=8086
-INFLUX_USER=influxdb
-INFLUX_PASSWORD=somepassword
-INFLUX_DBNAME=logger
 
 [display]
 CLK=23
 DIO=24
 DIGITS=4
 
-[moisture]
+[soil]
 # will be turned on only to read data, prolonging sensor life
 VCC=17
 DIO=27
+
+[ledring]
+# pwm pin used for digital input
+DIN = 18
+# number of leds in your ring
+LEDS = 12
+# led signal frequency in Hz
+FREQ = 800000
+# brightness is in (0, 255)
+BRIGHTNESS = 255
+# DMA channel to use for generating signal (try 5)
+DMA = 5
+# 1 to invert the signal (when using NPN transistor level shift)
+INVERT = 0
