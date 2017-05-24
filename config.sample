@@ -38,3 +38,6 @@ BRIGHTNESS = 255
 DMA = 5
 # 1 to invert the signal (when using NPN transistor level shift)
 INVERT = 0
+
+[button]
+DIO=26
