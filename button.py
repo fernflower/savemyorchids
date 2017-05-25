@@ -26,20 +26,24 @@ class Button(extdevinterface.ExternalDevice):
 
 def main():
     button = Button()
+    pressed = False
     is_on = True
     child = None
     while True:
         time.sleep(0.1)
-        if button.is_pressed():
+        while button.is_pressed():
+            pressed = True
+        if pressed:
             is_on = not is_on
             print("Button is now %s" % ("on" if is_on else "off"))
-        if is_on and not child:
-            cmd = ["python", "strandtest.py"]
-            child = subprocess.Popen(cmd)
-        elif not is_on:
-            if child:
-                os.kill(child.pid, signal.SIGINT)
-                child = None
+            if is_on and not child:
+                cmd = ["python", "strandtest.py"]
+                child = subprocess.Popen(cmd)
+            elif not is_on:
+                if child:
+                    os.kill(child.pid, signal.SIGINT)
+                    child = None
+            pressed = False
 
 
 if __name__ == "__main__":
