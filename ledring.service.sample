@@ -1,0 +1,15 @@
+[Unit]
+Description=12-diode led ring and button
+
+[Service]
+Type=idle
+# figure out how to rewrite this without direct paths
+Environment="PATH=/root/savemyorchids/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment="VIRTUAL_ENV=/root/savemyorchids/.venv"
+WorkingDirectory=/root/savemyorchids
+ExecStart=/root/savemyorchids/.venv/bin/python /root/savemyorchids/button.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
