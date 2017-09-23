@@ -1,7 +1,6 @@
-[telegram]
-BOT_TOKEN=some_bot_token_here
-BOT_FILE=telegram.users
-PORT=9999
+[default]
+GRAFANA_AUTH_USER=admin
+GRAFANA_AUTH_PASS=admin
 
 [influx]
 HOST=localhost
@@ -9,6 +8,11 @@ PORT=8086
 USER=influxdb
 PASSWORD=somepassword
 DBNAME=logger
+
+[telegram]
+BOT_TOKEN=some_bot_token_here
+BOT_FILE=telegram.users
+BOT_PORT=9999
 
 [dht]
 # 11 for dht11 or 22 for dht22
