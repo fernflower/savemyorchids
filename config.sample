@@ -3,12 +3,11 @@ GRAFANA_AUTH_USER=admin
 GRAFANA_AUTH_PASS=admin
 GRAFANA_HOST=172.23.197.74
 
-[influx]
-HOST=localhost
-PORT=8086
-USER=influxdb
-PASSWORD=somepassword
-DBNAME=logger
+INFLUX_HOST=172.23.120.211
+INFLUX_PORT=8086
+INFLUX_USER=influxdb
+INFLUX_PASSWORD=somepassword
+INFLUX_DBNAME=logger
 
 [telegram]
 BOT_TOKEN=some_bot_token_here
