@@ -1,6 +1,7 @@
 [default]
 GRAFANA_AUTH_USER=admin
 GRAFANA_AUTH_PASS=admin
+GRAFANA_HOST=172.23.197.74
 
 [influx]
 HOST=localhost

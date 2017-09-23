@@ -1,8 +1,10 @@
 #!/bin/sh
 
-ENV_FILE=config.sample
+ENV_FILE=config
 GRAFANA_SOURCE_NAME=orchids
 GRAFANA_DASHBOARD_FILE=grafana_dashboard.json
+INFLUX_IMAGE=tutum/influxdb
+GRAFANA_IMAGE=grafana/grafana
 
 function get_val {
     key=$1;
@@ -18,10 +20,10 @@ grafana_user=$(get_val "GRAFANA_AUTH_USER")
 grafana_pass=$(get_val "GRAFANA_AUTH_PASS")
 
 # start influx container
-sudo docker run -d -p 8083:8083 -p "$influx_port:$influx_port" -e PRE_CREATE_DB="$influx_dbname" --expose 8090 --expose 8099 --name influxdb tutum/influxdb
+sudo docker run -d -p 8083:8083 -p "$influx_port:$influx_port" -e PRE_CREATE_DB="$influx_dbname" --expose 8090 --expose 8099 --name influxdb $INFLUX_IMAGE
 
 # start grafana container
-sudo docker run -d -p 3000:3000 --link influxdb:influxdb --name grafana grafana/grafana
+sudo docker run -d -p 3000:3000 --link influxdb:influxdb --name grafana $GRAFANA_IMAGE
 
 # wait till containers are up and running
 # XXX FIXME
