@@ -1,0 +1,13 @@
+[Unit]
+Description=Orchids climate control
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/savemyorchids
+ExecStart=/bin/bash /root/savemyorchids/run_docker_influxdb_rpi.sh
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

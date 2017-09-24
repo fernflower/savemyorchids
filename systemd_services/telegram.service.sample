@@ -1,0 +1,13 @@
+[Unit]
+Description=Orchids Telegram Bot
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/savemyorchids
+ExecStart=/root/savemyorchids/.venv/bin/python /root/savemyorchids/telegram.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
