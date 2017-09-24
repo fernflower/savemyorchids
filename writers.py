@@ -32,13 +32,13 @@ class PlainWriter(object):
 
 class InfluxDBWriter(object):
 
-    def __init__(self, config_section):
+    def __init__(self, config_section="default"):
         self.params = utils.read_config(CONFIG, config_section)
-        self.client = influxdb.InfluxDBClient(self.params.host, 
-                                              int(self.params.port),
-                                              self.params.user, 
-                                              self.params.password,
-                                              self.params.dbname)
+        self.client = influxdb.InfluxDBClient(self.params.influx_host,
+                                              int(self.params.influx_port),
+                                              self.params.influx_user,
+                                              self.params.influx_password,
+                                              self.params.influx_dbname)
 
     def write(self, data):
         body = [{"measurement": "climate",

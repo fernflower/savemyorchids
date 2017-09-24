@@ -24,7 +24,7 @@ def main():
     parsed = parser.parse_args()
 
     writer = writers.PlainWriter(data_format=parsed.format, filename=parsed.filename)
-    influx_writer = writers.InfluxDBWriter("influx") if not parsed.nowrite else None
+    influx_writer = writers.InfluxDBWriter() if not parsed.nowrite else None
     led_display = display.FourDigitDisplay()
     dht11 = dht.DHTSensor()
     soil_sensor = soilsensor.SoilSensor()
