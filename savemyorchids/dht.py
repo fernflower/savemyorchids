@@ -1,6 +1,6 @@
 import Adafruit_DHT as adht
 
-import extdevinterface
+from savemyorchids import extdevinterface
 
 
 class DHTSensor(extdevinterface.ExternalDevice):

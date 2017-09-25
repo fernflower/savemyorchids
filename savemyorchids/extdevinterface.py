@@ -1,11 +1,10 @@
 import utils
 
-CONFIG = "config"
-
 
 class ExternalDevice(object):
+    """A base class for any peripheral device to be connected to RPi"""
     def __init__(self, config_section):
-        self.params = utils.read_config(CONFIG, config_section)
+        self.params = utils.read_config(config_section)
         self._device = self.init()
 
     def init(self):

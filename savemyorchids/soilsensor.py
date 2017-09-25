@@ -2,7 +2,7 @@ import time
 
 import RPi.GPIO as IO
 
-import extdevinterface
+from savemyorchids import extdevinterface
 
 
 class SoilSensor(extdevinterface.ExternalDevice):

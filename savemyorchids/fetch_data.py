@@ -4,14 +4,13 @@ import logging
 import sys
 import time
 
-
-import display
-import dht
-import soilsensor
-import writers
+from savemyorchids import display
+from savemyorchids import dht
+from savemyorchids import soilsensor
+from savemyorchids import writers
+from savemyorchids import utils
 
 LOG = logging.getLogger(__name__)
-DATE_FORMAT="%d/%m/%Y %H:%M:%S"
 
 
 def main():
@@ -23,6 +22,7 @@ def main():
     parser.add_argument('--nowrite', action='store_true', default=False)
     parsed = parser.parse_args()
 
+    params = utils.read_config("default")
     writer = writers.PlainWriter(data_format=parsed.format, filename=parsed.filename)
     influx_writer = writers.InfluxDBWriter() if not parsed.nowrite else None
     led_display = display.FourDigitDisplay()
@@ -30,7 +30,7 @@ def main():
     soil_sensor = soilsensor.SoilSensor()
     try:
         while True:
-            data = fetch_data(dht11, soil_sensor)
+            data = fetch_data(dht11, soil_sensor, params.date_format)
             LOG.info("Data fetched: %s" % data)
             if not data:
                 LOG.error("Sensor could not fetch any data!")
@@ -44,7 +44,7 @@ def main():
         writer.close()
         sys.exit()
 
-def fetch_data(dht_sensor, soil_sensor):
+def fetch_data(dht_sensor, soil_sensor, date_format):
     dht_data = dht_sensor.output()
     soil = soil_sensor.output()
     dht_data.update(soil)
@@ -52,7 +52,7 @@ def fetch_data(dht_sensor, soil_sensor):
     if not any([dht_data.get(k) for k in check_keys]):
         return None
     curr_date = datetime.datetime.now()
-    date = datetime.datetime.strftime(curr_date, DATE_FORMAT)
+    date = datetime.datetime.strftime(curr_date, date_format)
     return {'date': date, 'temperature': dht_data["temperature"],
             'humidity': dht_data["humidity"], 'soil_wet': (soil["soil_state"] + 1) % 2}
 

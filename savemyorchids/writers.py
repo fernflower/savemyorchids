@@ -4,9 +4,7 @@ import sys
 
 import influxdb
 
-import utils
-
-CONFIG = "config"
+from savemyorchids import utils
 
 
 class PlainWriter(object):
@@ -33,7 +31,7 @@ class PlainWriter(object):
 class InfluxDBWriter(object):
 
     def __init__(self, config_section="default"):
-        self.params = utils.read_config(CONFIG, config_section)
+        self.params = utils.read_config(config_section)
         self.client = influxdb.InfluxDBClient(self.params.influx_host,
                                               int(self.params.influx_port),
                                               self.params.influx_user,

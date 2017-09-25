@@ -6,10 +6,9 @@ from BaseHTTPServer import BaseHTTPRequestHandler
 import SimpleHTTPServer
 import SocketServer
 
-import utils
+from savemyorchids import utils
 
-CONFIG = "config"
-PARAMS = utils.read_config(CONFIG, "telegram")
+PARAMS = utils.read_config("telegram")
 
 
 class TelegramBot(object):

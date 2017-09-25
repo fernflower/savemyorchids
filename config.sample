@@ -3,11 +3,18 @@ GRAFANA_AUTH_USER=admin
 GRAFANA_AUTH_PASS=admin
 GRAFANA_HOST=172.23.197.74
 
+DATE_FORMAT="%d/%m/%Y %H:%M:%S"
+
 INFLUX_HOST=172.23.120.211
 INFLUX_PORT=8086
 INFLUX_USER=influxdb
 INFLUX_PASSWORD=somepassword
 INFLUX_DBNAME=logger
+
+# seconds to wait till influx is up and running (seconds)
+WAIT_FOR_INFLUX_TIMEOUT = 600
+# number of seconds to sleep till next attempt
+WAIT_FOR_INFLUX_STEP = 10
 
 [telegram]
 BOT_TOKEN=some_bot_token_here

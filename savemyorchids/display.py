@@ -1,7 +1,6 @@
 import tm1637
-import utils
 
-import extdevinterface
+from savemyorchids import extdevinterface
 
 
 class FourDigitDisplay(extdevinterface.ExternalDevice):
