@@ -1,11 +1,13 @@
 [Unit]
 Description=Orchids climate control
-After=grafana.target
+After=docker.service
 
 [Service]
 Type=simple
 WorkingDirectory=/root/savemyorchids
-ExecStart=/root/savemyorchids/.venv/bin/python /root/savemyorchids/run.py
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run --rm --privileged --name %n savemyorchids
 StandardOutput=syslog
 StandardError=syslog
 
